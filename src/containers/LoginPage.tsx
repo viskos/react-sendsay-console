@@ -4,6 +4,9 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../components/Button';
 import Input from '../components/Input';
+import LoginError from '../components/LoginError';
+import Logo from '../components/Logo';
+import Typography from '../components/Typography';
 
 import { authenticate } from '../store/actions/auth';
 
@@ -17,24 +20,13 @@ const Wrapper = styled.div`
 
 const Form = styled.section`
 	width: 520px;
-	height: 425px;
+	height: fit-content;
 	left: calc(50% - 520px / 2);
 	top: 222px;
 	background: #ffffff;
 	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 	border-radius: 5px;
 	padding: 40px 30px;
-`;
-
-const LogoStyled = styled.img`
-	margin-bottom: 20px;
-`;
-
-const P = styled.p`
-	font-size: 24px;
-	line-height: 30px;
-	color: #0d0d0d;
-	margin: 0;
 `;
 
 const A = styled.a`
@@ -78,9 +70,10 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
 
 	return (
 		<Wrapper>
-			<LogoStyled src="/icons/logo.svg" />
+			<Logo margin="20" />
 			<Form>
-				<P>API-консолька</P>
+				<Typography size="24">API-консолька</Typography>
+				<LoginError error='{id: "error/auth/failed", explain: "wrong_credentials"}' />
 				<Input
 					value={login}
 					onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLogin(e.target.value)}
@@ -100,12 +93,7 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
 					placeholder="Пароль"
 					title="Пароль"
 				/>
-				<Button
-					value="Войти"
-					onClick={onSubmit}
-					type="submit"
-					disabled={!login || !sublogin || !password}
-				/>
+				<Button value="Войти" onClick={onSubmit} type="submit" disabled={!login || !password} />
 			</Form>
 			<A href="https://github.com/viskos">@viskos</A>
 		</Wrapper>
