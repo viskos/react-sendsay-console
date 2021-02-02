@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components'
+import logoutImg from '../../assets/log-out.svg'
+import fullScreenImg from '../../assets/full-screen.svg'
 
-const StyledButton = styled.button<React.CSSProperties>`
+const StyleButton = styled.button<React.CSSProperties>`
     width: 110px;
     height: 40px;
     background: linear-gradient(180deg, #45A6FF 0%, #0055FB 100%), #C4C4C4;
@@ -27,8 +29,31 @@ const StyledButton = styled.button<React.CSSProperties>`
     }
 `
 
+const LogoutButton = styled.button`
+    width: 80px;
+    text-align: left;
+    border: none;
+    color: #0D0D0D;
+    font-size: 16px;
+    outline: none;
+    cursor: pointer;
+    background: url(${logoutImg}) no-repeat;
+    background-position: right;
+`
+
+const FullScreenButton = styled.button`
+    width: 20px;
+    height: 20px;
+    background: url(${fullScreenImg}) no-repeat;
+    border: none;
+    outline: none;
+    cursor: pointer;
+`
+
 const Styled = {
-    StyledButton
+    StyleButton,
+    LogoutButton,
+    FullScreenButton
 }
 
 export default Styled

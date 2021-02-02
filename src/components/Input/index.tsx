@@ -7,6 +7,7 @@ type StyledInputType = {
 	placeholder: string;
 	title: string;
 	optional?: boolean;
+	error?: boolean;
 };
 
 const { StyledInput, TitleGrop, P, Small } = Styled;
@@ -17,14 +18,17 @@ const Input: React.FC<StyledInputType> = ({
 	placeholder,
 	title,
 	optional = false,
-}) => (
-	<label>
-		<TitleGrop>
-			<P>{title}</P>
-			<Small optional={optional}>Опционально</Small>
-		</TitleGrop>
-		<StyledInput value={value} onChange={onChange} placeholder={placeholder} />
-	</label>
-);
+	error,
+}) => {
+	return (
+		<label>
+			<TitleGrop>
+				<P error={error}>{title}</P>
+				<Small optional={optional}>Опционально</Small>
+			</TitleGrop>
+			<StyledInput value={value} onChange={onChange} placeholder={placeholder} error={error} />
+		</label>
+	);
+};
 
 export default Input;
