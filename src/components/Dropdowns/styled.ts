@@ -4,7 +4,8 @@ import dotsImg from '../../assets/dots.svg'
 
 type TStyledProps = {
     isSuccess?: boolean,
-    isShow?: boolean
+    isShow?: boolean,
+    destructive?: boolean
 }
 
 const DropdownWrapper = styled.div<React.CSSProperties>`
@@ -40,9 +41,29 @@ const StyledItem = styled.div<React.CSSProperties>`
 `
 
 const DropdownBody = styled.div<TStyledProps>`
-    display: ${({isShow}) => isShow ? 'blocl' : 'none'};
-    height: 140px;
+    display: ${({isShow}) => isShow ? 'block' : 'none'};
+    position: absolute;
+    height: fit-content;
+    width: 130px;
     padding: 5px 0;
+    background: #FFFFFF;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+`
+
+const DropdownItem = styled.div<TStyledProps>`
+    font-size: 16px;
+    color: #0D0D0D;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    cursor: pointer;
+    border-top: ${({destructive}) => destructive ? '1px solid rgba(0, 0, 0, 0.2);' : 'none'};
+    &:hover {
+        background: ${({destructive}) => destructive ? '#CF2C00' : '#0055FB'};
+        color: #FFFFFF;
+    }
 `
 
 const Styled = {
@@ -50,7 +71,8 @@ const Styled = {
     StyledItem,
     Ring,
     Dots,
-    DropdownBody
+    DropdownBody,
+    DropdownItem
 }
 
 export default Styled

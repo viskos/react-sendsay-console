@@ -3,7 +3,7 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import ConsoleHeader from '../components/ConsoleHeader';
 import Logo from '../components/Logo';
 import { logout } from '../store/actions/auth';
-import { Dropdown, DropdownItem, HeaderButtons, Typography } from '../components';
+import { Dropdown, DropdownItem, HeaderButtons, SplitConsole, Typography } from '../components';
 
 const ConsolePage: React.FC = () => {
 	const { login, sublogin } = useSelector((state: RootStateOrAny) => state.auth);
@@ -30,11 +30,13 @@ const ConsolePage: React.FC = () => {
 					<HeaderButtons title="full" type="fullscreen" />
 				</ConsoleHeader>
 			</ConsoleHeader>
-
 			<Dropdown>
 				<DropdownItem isSuccess>track.getgetgetgetget</DropdownItem>
 				<DropdownItem>track.getgetgetgetget</DropdownItem>
 			</Dropdown>
+			<div style={{ background: 'white', height: '100%', padding: '30px 15px' }}>
+				<SplitConsole />
+			</div>
 		</>
 	);
 };
