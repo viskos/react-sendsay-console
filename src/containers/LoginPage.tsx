@@ -129,6 +129,7 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
 								disabled={submitting}
 								onClick={handleSubmit}
 								type="submit"
+								margin="20"
 							/>
 						</form>
 					)}

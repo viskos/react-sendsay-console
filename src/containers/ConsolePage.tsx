@@ -3,7 +3,16 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import ConsoleHeader from '../components/ConsoleHeader';
 import Logo from '../components/Logo';
 import { logout } from '../store/actions/auth';
-import { Dropdown, DropdownItem, HeaderButtons, SplitConsole, Typography } from '../components';
+import {
+	Dropdown,
+	DropdownItem,
+	Footer,
+	HeaderButtons,
+	SplitConsole,
+	StyledButton,
+	Typography,
+} from '../components';
+import Styled from '../components/Button/styled';
 
 const ConsolePage: React.FC = () => {
 	const { login, sublogin } = useSelector((state: RootStateOrAny) => state.auth);
@@ -34,9 +43,14 @@ const ConsolePage: React.FC = () => {
 				<DropdownItem isSuccess>track.getgetgetgetget</DropdownItem>
 				<DropdownItem>track.getgetgetgetget</DropdownItem>
 			</Dropdown>
-			<div style={{ background: 'white', height: '100%', padding: '30px 15px' }}>
+			<div style={{ background: 'white', height: '100%', position: 'relative' }}>
 				<SplitConsole />
 			</div>
+			<Footer>
+				<StyledButton value="Отправить" type="button" />
+				<a href="https://github.com/viskos">@viskos</a>
+				<button>Форматировать</button>
+			</Footer>
 		</>
 	);
 };

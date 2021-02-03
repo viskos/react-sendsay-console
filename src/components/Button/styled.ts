@@ -3,13 +3,17 @@ import styled from 'styled-components'
 import logoutImg from '../../assets/log-out.svg'
 import fullScreenImg from '../../assets/full-screen.svg'
 
-const StyleButton = styled.button<React.CSSProperties>`
+type TStyledButton = {
+    margin: string
+}
+
+const StyleButton = styled.button<TStyledButton>`
     width: 110px;
     height: 40px;
     background: linear-gradient(180deg, #45A6FF 0%, #0055FB 100%), #C4C4C4;
     border-radius: 5px;
     padding: 0 10px;
-    margin-top: 20px;
+    margin-top: ${({margin}) => margin+'px' || '0'};
     border: none;
     font-size: 16px;
     color: #FFFFFF;
@@ -29,7 +33,7 @@ const StyleButton = styled.button<React.CSSProperties>`
     }
 `
 
-const LogoutButton = styled.button`
+const LogoutButton = styled.button<React.CSSProperties>`
     width: 80px;
     text-align: left;
     border: none;
@@ -41,7 +45,7 @@ const LogoutButton = styled.button`
     background-position: right;
 `
 
-const FullScreenButton = styled.button`
+const FullScreenButton = styled.button<React.CSSProperties>`
     width: 20px;
     height: 20px;
     background: url(${fullScreenImg}) no-repeat;

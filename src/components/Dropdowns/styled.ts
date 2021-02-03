@@ -49,6 +49,7 @@ const DropdownBody = styled.div<TStyledProps>`
     background: #FFFFFF;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
     border-radius: 3px;
+    z-index: 100;
 `
 
 const DropdownItem = styled.div<TStyledProps>`
