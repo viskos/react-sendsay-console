@@ -11,8 +11,9 @@ type TStyledProps = {
 const DropdownWrapper = styled.div<React.CSSProperties>`
     height: 50px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    padding: 0 15px 0 15px;
+    padding-left: 15px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 `
 

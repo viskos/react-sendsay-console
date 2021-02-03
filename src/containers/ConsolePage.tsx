@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import ConsoleHeader from '../components/ConsoleHeader';
 import Logo from '../components/Logo';
@@ -12,15 +12,46 @@ import {
 	StyledButton,
 	Typography,
 } from '../components';
-import Styled from '../components/Button/styled';
+import './style.css';
 
 const ConsolePage: React.FC = () => {
 	const { login, sublogin } = useSelector((state: RootStateOrAny) => state.auth);
+
+	const divRef = useRef<HTMLDivElement>(null);
 	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (divRef.current) {
+			console.log(`hookRef div width: ${divRef.current.scrollLeft}`);
+			divRef.current.scrollLeft = divRef.current.scrollWidth;
+		}
+	}, []);
+
+	const onWheel = () => {
+		if (divRef.current) {
+			console.log(`hookRef div width: ${divRef.current.scrollLeft}`);
+			divRef.current.scrollLeft = divRef.current.scrollWidth + 10;
+		}
+	};
 
 	const handlelogoutLogOut = () => {
 		dispatch(logout());
 	};
+
+	const historyItems = [
+		'tack.get',
+		'tack.get',
+		'tack.get',
+		'tack.get',
+		'tack.get',
+		'tack.get',
+		'tack.get',
+		'tack.get',
+		'tack.get',
+		'tack.get',
+		'tack.get',
+		'tack.get',
+	];
 
 	return (
 		<>
@@ -40,8 +71,14 @@ const ConsolePage: React.FC = () => {
 				</ConsoleHeader>
 			</ConsoleHeader>
 			<Dropdown>
-				<DropdownItem isSuccess>track.getgetgetgetget</DropdownItem>
-				<DropdownItem>track.getgetgetgetget</DropdownItem>
+				<div className="suka" onWheel={onWheel} ref={divRef}>
+					{historyItems.map((i, index) => (
+						<DropdownItem key={index} isSuccess>
+							{i}
+						</DropdownItem>
+					))}
+				</div>
+				<HeaderButtons type="clear-history">X</HeaderButtons>
 			</Dropdown>
 			<div style={{ background: 'white', height: '100%', position: 'relative' }}>
 				<SplitConsole />

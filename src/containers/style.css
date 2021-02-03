@@ -1,0 +1,6 @@
+.suka {
+	display: flex;
+	width: calc(100% - 50px);
+	overflow-x: hidden;
+	padding: 0;
+}

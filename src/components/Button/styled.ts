@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 import logoutImg from '../../assets/log-out.svg'
 import fullScreenImg from '../../assets/full-screen.svg'
+import clearHistoryImg from '../../assets/clear-history.svg'
 
 type TStyledButton = {
     margin: string
@@ -54,10 +55,29 @@ const FullScreenButton = styled.button<React.CSSProperties>`
     cursor: pointer;
 `
 
+const ClearHistoryButton = styled(FullScreenButton)`
+    background: url(${clearHistoryImg}) no-repeat;
+    background-position: center;
+    border-left: 1px solid #C4C4C4;
+    height: 100%;
+    width: 50px;
+    position: relative;
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -15px;
+        width: 15px;
+        height: 100%;
+        background: linear-gradient(269.93deg, #F6F6F6 0.06%, rgba(246, 246, 246, 0) 99.93%);
+    }
+`
+
 const Styled = {
     StyleButton,
     LogoutButton,
-    FullScreenButton
+    FullScreenButton,
+    ClearHistoryButton
 }
 
 export default Styled
