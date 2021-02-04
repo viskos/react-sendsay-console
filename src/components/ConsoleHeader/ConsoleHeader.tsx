@@ -7,7 +7,7 @@ type TConsoleHeader = {
 
 const { HeaderWrapper, HeaderItem, UserData } = Styled;
 
-const ConsoleHeader: React.FC<TConsoleHeader> = ({ item, children }) => {
+export const ConsoleHeader: React.FC<TConsoleHeader> = ({ item, children }) => {
 	const renderContent = () => {
 		if (item === 'wrapper') return <HeaderWrapper>{children}</HeaderWrapper>;
 		if (item === 'wrapper-item') return <HeaderItem>{children}</HeaderItem>;
@@ -17,5 +17,3 @@ const ConsoleHeader: React.FC<TConsoleHeader> = ({ item, children }) => {
 
 	return renderContent();
 };
-
-export default ConsoleHeader;

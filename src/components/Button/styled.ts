@@ -62,6 +62,7 @@ const ClearHistoryButton = styled(FullScreenButton)`
     height: 100%;
     width: 50px;
     position: relative;
+    margin-left: auto;
     &::before {
         content: "";
         position: absolute;

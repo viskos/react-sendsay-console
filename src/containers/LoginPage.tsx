@@ -3,10 +3,7 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 import styled from 'styled-components';
-import { StyledButton, Typography } from '../components';
-import Input from '../components/Input';
-import LoginError from '../components/LoginError';
-import Logo from '../components/Logo';
+import { StyledButton, Typography, Input, LoginError, Logo } from '../components';
 
 import { authenticate } from '../store/actions/auth';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import Styled from './styled';
 
-const LoginError: React.FC<{ error: string }> = ({ error }) => {
+export const LoginError: React.FC<{ error: string }> = ({ error }) => {
 	const { StyledIcon, ErrorWrapper, ErrorTitle, ErrorDescription } = Styled;
 
 	return (
@@ -14,5 +14,3 @@ const LoginError: React.FC<{ error: string }> = ({ error }) => {
 		</ErrorWrapper>
 	);
 };
-
-export default LoginError;

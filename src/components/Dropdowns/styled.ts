@@ -15,6 +15,9 @@ const DropdownWrapper = styled.div<React.CSSProperties>`
     align-items: center;
     padding-left: 15px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+	width: 100%;
+    padding: 0;
+    position: relative;
 `
 
 const Dots = styled.div<React.CSSProperties>`
@@ -42,8 +45,7 @@ const StyledItem = styled.div<React.CSSProperties>`
 `
 
 const DropdownBody = styled.div<TStyledProps>`
-    display: ${({isShow}) => isShow ? 'block' : 'none'};
-    position: absolute;
+    visibility: ${({isShow}) => isShow ? 'visible' : 'hidden'};
     height: fit-content;
     width: 130px;
     padding: 5px 0;
@@ -51,6 +53,7 @@ const DropdownBody = styled.div<TStyledProps>`
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
     border-radius: 3px;
     z-index: 100;
+    position: sticky;
 `
 
 const DropdownItem = styled.div<TStyledProps>`

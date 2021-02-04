@@ -5,8 +5,6 @@ import { Typography } from '../../components';
 export const DropdownItem: React.FC<{ isSuccess?: boolean }> = ({ isSuccess, children }) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 
-	const { StyledItem, Ring, Dots, DropdownBody, DropdownItem } = Styled;
-
 	const handleDropdownToggle = (): void => {
 		setIsOpen(!isOpen);
 	};
@@ -14,6 +12,8 @@ export const DropdownItem: React.FC<{ isSuccess?: boolean }> = ({ isSuccess, chi
 	const chooseDropdownItem = (): void => {
 		setIsOpen(!isOpen);
 	};
+
+	const { StyledItem, Ring, Dots, DropdownBody, DropdownItem } = Styled;
 
 	return (
 		<div>

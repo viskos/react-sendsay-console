@@ -12,7 +12,7 @@ type StyledInputType = {
 
 const { StyledInput, TitleGrop, P, Small } = Styled;
 
-const Input: React.FC<StyledInputType> = ({
+export const Input: React.FC<StyledInputType> = ({
 	value,
 	onChange,
 	placeholder,
@@ -30,5 +30,3 @@ const Input: React.FC<StyledInputType> = ({
 		</label>
 	);
 };
-
-export default Input;

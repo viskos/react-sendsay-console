@@ -1,9 +1,8 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import ConsoleHeader from '../components/ConsoleHeader';
-import Logo from '../components/Logo';
 import { logout } from '../store/actions/auth';
 import {
+	ConsoleHeader,
 	Dropdown,
 	DropdownItem,
 	Footer,
@@ -11,28 +10,14 @@ import {
 	SplitConsole,
 	StyledButton,
 	Typography,
+	Scrollable,
+	Logo,
 } from '../components';
-import './style.css';
 
 const ConsolePage: React.FC = () => {
 	const { login, sublogin } = useSelector((state: RootStateOrAny) => state.auth);
 
-	const divRef = useRef<HTMLDivElement>(null);
 	const dispatch = useDispatch();
-
-	useEffect(() => {
-		if (divRef.current) {
-			console.log(`hookRef div width: ${divRef.current.scrollLeft}`);
-			divRef.current.scrollLeft = divRef.current.scrollWidth;
-		}
-	}, []);
-
-	const onWheel = () => {
-		if (divRef.current) {
-			console.log(`hookRef div width: ${divRef.current.scrollLeft}`);
-			divRef.current.scrollLeft = divRef.current.scrollWidth + 10;
-		}
-	};
 
 	const handlelogoutLogOut = () => {
 		dispatch(logout());
@@ -71,13 +56,13 @@ const ConsolePage: React.FC = () => {
 				</ConsoleHeader>
 			</ConsoleHeader>
 			<Dropdown>
-				<div className="suka" onWheel={onWheel} ref={divRef}>
+				<Scrollable>
 					{historyItems.map((i, index) => (
 						<DropdownItem key={index} isSuccess>
 							{i}
 						</DropdownItem>
 					))}
-				</div>
+				</Scrollable>
 				<HeaderButtons type="clear-history">X</HeaderButtons>
 			</Dropdown>
 			<div style={{ background: 'white', height: '100%', position: 'relative' }}>
