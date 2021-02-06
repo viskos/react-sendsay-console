@@ -1,6 +1,6 @@
 import React from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { logout } from '../store/actions/auth';
+import { logout } from '../vanillaStore/actions/auth';
 import {
 	ConsoleHeader,
 	Dropdown,

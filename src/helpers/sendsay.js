@@ -3,5 +3,5 @@ const sendsay = new Sendsay();
 sendsay.setSessionFromCookie('sendsay_session');
 
 export default class SendsayCustom {
-  static sendsay = sendsay;
+	static sendsay = sendsay;
 }

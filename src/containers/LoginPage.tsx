@@ -5,7 +5,7 @@ import { Form, Field } from 'react-final-form';
 import styled from 'styled-components';
 import { StyledButton, Typography, Input, LoginError, Logo } from '../components';
 
-import { authenticate } from '../store/actions/auth';
+import { authenticate, asyncAuthUser } from '../store/slices/authSlice';
 
 const Wrapper = styled.div`
 	height: 100%;
@@ -49,16 +49,6 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
 		}
 	}, [isLoggedIn]);
 
-	const doLogin = (): void => {
-		dispatch(
-			authenticate({
-				login,
-				sublogin,
-				password,
-			})
-		);
-	};
-
 	const validateLogin = (value: string) => {
 		setLogin(value);
 		return value ? false : true;
@@ -70,7 +60,14 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
 	};
 
 	const onSubmit = (e: React.MouseEvent<HTMLButtonElement>): void => {
-		doLogin();
+		e.preventDefault();
+		dispatch(
+			asyncAuthUser({
+				login,
+				sublogin,
+				password,
+			})
+		);
 	};
 
 	return (
@@ -78,58 +75,60 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
 			<Logo margin="20" />
 			<StyledForm>
 				<Typography size="24">API-консолька</Typography>
-				<LoginError error='{id: "error/auth/failed", explain: "wrong_credentials"}' />
+				{/* <LoginError error='{id: "error/auth/failed", explain: "wrong_credentials"}' /> */}
 				<Form
 					onSubmit={onSubmit}
-					render={({ handleSubmit, submitting }) => (
-						<form>
-							<Field
-								name="login"
-								validate={validateLogin}
-								render={({ input, meta }) => (
-									<>
-										<Input
-											{...input}
-											placeholder="Логин"
-											title="Логин"
-											error={meta.error}
-										/>
-									</>
-								)}
-							/>
-							<Input
-								value={sublogin}
-								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-									setSubLogin(e.target.value)
-								}
-								placeholder="Сублогин"
-								title="Сублогин"
-								optional
-							/>
-							<Field
-								name="password"
-								validate={validatePassword}
-								render={({ input, meta }) => (
-									<>
-										<Input
-											{...input}
-											placeholder="Пароль"
-											title="Пароль"
-											error={meta.error}
-										/>
-										{meta.touched && meta.error && <span>{meta.error}</span>}
-									</>
-								)}
-							/>
-							<StyledButton
-								value="Войти"
-								disabled={submitting}
-								onClick={handleSubmit}
-								type="submit"
-								margin="20"
-							/>
-						</form>
-					)}
+					render={({ pristine }) => {
+						return (
+							<form>
+								<Field
+									name="login"
+									validate={validateLogin}
+									render={({ input, meta }) => (
+										<>
+											<Input
+												{...input}
+												placeholder="Логин"
+												title="Логин"
+												error={meta.error}
+											/>
+										</>
+									)}
+								/>
+								<Input
+									value={sublogin}
+									onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+										setSubLogin(e.target.value)
+									}
+									placeholder="Сублогин"
+									title="Сублогин"
+									optional
+								/>
+								<Field
+									name="password"
+									validate={validatePassword}
+									render={({ input, meta }) => (
+										<>
+											<Input
+												{...input}
+												placeholder="Пароль"
+												title="Пароль"
+												error={meta.error}
+											/>
+											{meta.touched && meta.error && <span>{meta.error}</span>}
+										</>
+									)}
+								/>
+								<StyledButton
+									onClick={onSubmit}
+									value="Войти"
+									disabled={pristine}
+									type="submit"
+									margin="20"
+								/>
+							</form>
+						);
+					}}
 				/>
 			</StyledForm>
 			<A href="https://github.com/viskos">@viskos</A>
