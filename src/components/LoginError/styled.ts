@@ -8,12 +8,12 @@ const StyledIcon = styled.img<React.CSSProperties>`
 `
 
 const ErrorWrapper = styled.div<React.CSSProperties>`
-    height: 70px;
+    height: fit-content;
     background: rgba(207, 44, 0, 0.1);
     border-radius: 5px;
     display: flex;
     flex-direction: row;
-    padding: 15px 12px 0 12px;
+    padding: 15px 12px 15px 12px;
 `
 
 const ErrorTitle = styled.p<React.CSSProperties>`

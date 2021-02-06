@@ -7,7 +7,6 @@ type TAuthUserState = {
 	login: string | null,
 	sublogin: string | null,
 	password: string | null,
-	asyncAuthRes: any,
 	asyncAuthResErr: any
 }
 
@@ -23,7 +22,6 @@ const initialState: TAuthUserState = {
 	login: null,
 	sublogin: null,
 	password: null,
-	asyncAuthRes: null,
 	asyncAuthResErr: null,
 };
 

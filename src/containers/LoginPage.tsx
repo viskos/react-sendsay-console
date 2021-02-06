@@ -41,6 +41,7 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
 	const [password, setPassword] = useState<string>('');
 	const loading = useSelector((state: RootStateOrAny) => state.auth.loading);
 	const isLoggedIn = useSelector((state: RootStateOrAny) => !!state.auth.sessionKey?.length);
+	const error = useSelector((state: RootStateOrAny) => state.auth.asyncAuthResErr);
 	console.log('loading', loading);
 
 	useEffect(() => {
@@ -75,7 +76,7 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
 			<Logo margin="20" />
 			<StyledForm>
 				<Typography size="24">API-консолька</Typography>
-				{/* <LoginError error='{id: "error/auth/failed", explain: "wrong_credentials"}' /> */}
+				{error ? <LoginError error={JSON.stringify(error)} /> : null}
 				<Form
 					onSubmit={onSubmit}
 					render={({ pristine }) => {
