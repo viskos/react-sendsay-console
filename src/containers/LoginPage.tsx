@@ -5,7 +5,7 @@ import { Form, Field } from 'react-final-form';
 import styled from 'styled-components';
 import { StyledButton, Typography, Input, LoginError, Logo } from '../components';
 
-import { authenticate, asyncAuthUser } from '../store/slices/authSlice';
+import { asyncAuthUser } from '../store/slices/authSlice';
 
 const Wrapper = styled.div`
 	height: 100%;

@@ -49,11 +49,6 @@ const authSlice = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {
-		authenticate(state, action: PayloadAction<TAuthenticate>) {
-			state.login = action.payload.login;
-			state.password = action.payload.password;
-			state.sublogin = action.payload.sublogin;
-		},
 		authenticateSuccess(state, action) {
 			state.sessionKey = action.payload
 		},
@@ -64,4 +59,4 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
-export const { authenticate, authenticateSuccess, authenticateError } = authSlice.actions;
+export const { authenticateSuccess, authenticateError } = authSlice.actions;
