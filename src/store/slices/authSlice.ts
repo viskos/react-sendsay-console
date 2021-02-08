@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, } from '@reduxjs/toolkit';
 import api from '../../helpers/sendsay';
 
 type TAuthUserState = {
@@ -7,13 +7,14 @@ type TAuthUserState = {
 	login: string | null,
 	sublogin: string | null,
 	password: string | null,
-	asyncAuthResErr: any
+	asyncAuthResErr: any,
+	testAuth: any
 }
 
 type TAuthenticate = {
 	login: string,
 	sublogin: string,
-	password: string
+	password: string,
 }
 
 const initialState: TAuthUserState = {
@@ -23,7 +24,27 @@ const initialState: TAuthUserState = {
 	sublogin: null,
 	password: null,
 	asyncAuthResErr: null,
+	testAuth: null
 };
+
+export const asyncCheckAuth = () => {
+	return async (dispatch: any) => {
+		api.sendsay.request({
+			action: 'pong',
+		})
+		.then((res: any) => {
+			console.log('RELOAD',res)
+			dispatch(checkAuth({login: res.account, sublogin: res.sublogin, key: localStorage.getItem('sendsay_session')}))
+			document.cookie = `sendsay_session=${api.sendsay.session}`
+		})
+		.catch((err: any) => {
+			console.error('RELOAD', err)
+			if (err.id === 'error/auth/failed') {
+				dispatch(logout())
+			}
+		})
+	}
+}
 
 export const asyncAuthUser = (payload: TAuthenticate) => {
 	return async (dispatch: any)=> {
@@ -34,8 +55,9 @@ export const asyncAuthUser = (payload: TAuthenticate) => {
 				password: payload.password
 			})
 			.then(() => {
-				dispatch(authenticateSuccess(api.sendsay.session))
+				dispatch(authenticateSuccess({login: payload.login, sublogin: payload.sublogin, key: api.sendsay.session}))
 				document.cookie = `sendsay_session=${api.sendsay.session}`;
+				localStorage.setItem('sendsay_session', api.sendsay.session)
 			})
 			.catch((err: any) => {
 				document.cookie = '';
@@ -49,14 +71,29 @@ const authSlice = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {
+		checkAuth(state, action) {
+			state.login = action.payload.login
+			state.sublogin = action.payload.sublogin
+			state.sessionKey = action.payload.key
+		},
 		authenticateSuccess(state, action) {
-			state.sessionKey = action.payload
+			console.log(action)
+			state.login = action.payload.login
+			state.sublogin = action.payload.sublogin
+			state.sessionKey = action.payload.key
 		},
 		authenticateError(state, action) {
 			state.asyncAuthResErr = action.payload
+		},
+		logout(state) {
+			document.cookie = '';
+			localStorage.clear()
+			state.sessionKey = null
+			state.login = null
+			state.sublogin = null
 		}
 	}
 });
 
 export default authSlice.reducer;
-export const { authenticateSuccess, authenticateError } = authSlice.actions;
+export const { checkAuth, authenticateSuccess, authenticateError, logout } = authSlice.actions;

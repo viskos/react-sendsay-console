@@ -5,7 +5,7 @@ import { Form, Field } from 'react-final-form';
 import styled from 'styled-components';
 import { StyledButton, Typography, Input, LoginError, Logo } from '../components';
 
-import { asyncAuthUser } from '../store/slices/authSlice';
+import { asyncAuthUser, asyncCheckAuth } from '../store/slices/authSlice';
 
 const Wrapper = styled.div`
 	height: 100%;
@@ -43,12 +43,17 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
 	const isLoggedIn = useSelector((state: RootStateOrAny) => !!state.auth.sessionKey?.length);
 	const error = useSelector((state: RootStateOrAny) => state.auth.asyncAuthResErr);
 	console.log('loading', loading);
+	console.log('isLoggedIn', isLoggedIn);
 
 	useEffect(() => {
 		if (isLoggedIn) {
 			history.push('/console');
 		}
 	}, [isLoggedIn]);
+
+	useEffect(() => {
+		dispatch(asyncCheckAuth());
+	}, []);
 
 	const validateLogin = (value: string) => {
 		setLogin(value);
@@ -114,6 +119,7 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
 												{...input}
 												placeholder="Пароль"
 												title="Пароль"
+												// type="password"
 												error={meta.error}
 											/>
 											{meta.touched && meta.error && <span>{meta.error}</span>}

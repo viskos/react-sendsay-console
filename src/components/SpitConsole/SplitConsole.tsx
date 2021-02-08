@@ -1,10 +1,19 @@
 import React from 'react';
 import SplitPane, { Pane } from 'react-split-pane';
 import { Typography } from '../Typography/Typography';
+import Styled from './styled';
 import './style.css';
 
-export const SplitConsole: React.FC = () => {
+type TSplitConsoleProps = {
+	onChange: (e: React.FormEvent<HTMLTextAreaElement>) => void;
+	value: string;
+	isInvalid: boolean;
+};
+
+export const SplitConsole: React.FC<TSplitConsoleProps> = ({ onChange, value, isInvalid }) => {
 	const initialWidth: number = window.innerWidth / 2;
+
+	const { StyledTextArea } = Styled;
 
 	return (
 		<SplitPane
@@ -33,7 +42,7 @@ export const SplitConsole: React.FC = () => {
 			>
 				<Typography size="12">Запрос:</Typography>
 				<Pane style={{ height: '100%' }}>
-					<textarea className="pane" />
+					<StyledTextArea value={value} onChange={onChange} isInvalid={isInvalid} />
 				</Pane>
 			</div>
 
@@ -50,7 +59,7 @@ export const SplitConsole: React.FC = () => {
 			>
 				<Typography size="12">Ответ:</Typography>
 				<Pane style={{ height: '100%' }}>
-					<textarea className="pane" />
+					<StyledTextArea />
 				</Pane>
 			</div>
 		</SplitPane>
