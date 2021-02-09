@@ -29,7 +29,7 @@ const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
 	const response = useSelector((state: RootStateOrAny) => state.console.response);
 	const isError = useSelector((state: RootStateOrAny) => state.console.isError);
 	const requestsHistory = useSelector((state: RootStateOrAny) => state.console.requestsHistory);
-	const [isInvalid, setIsInvali] = useState<boolean>(false);
+	const [isInvalid, setIsInvali] = useState<boolean>(true);
 	const [forRequest, setForRequest] = useState<any>(null);
 	const [fullscreen, setFullscreen] = useState<boolean>(false);
 
@@ -135,7 +135,12 @@ const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
 			</div>
 
 			<Footer>
-				<StyledButton value="Отправить" onClick={handleSendRequest} type="button" />
+				<StyledButton
+					value="Отправить"
+					onClick={handleSendRequest}
+					type="button"
+					disabled={isInvalid}
+				/>
 				<a href="https://github.com/viskos">@viskos</a>
 				<button onClick={FormatToJson} disabled={isInvalid}>
 					Форматировать
