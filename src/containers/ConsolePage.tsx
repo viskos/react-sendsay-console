@@ -7,6 +7,7 @@ import {
 	clearHistory,
 	checkHistory,
 	deleteHistoryItem,
+	copyActionHistoryItem,
 } from '../store/slices/consoleSlice';
 import {
 	ConsoleHeader,
@@ -28,7 +29,7 @@ const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
 	const response = useSelector((state: RootStateOrAny) => state.console.response);
 	const isError = useSelector((state: RootStateOrAny) => state.console.isError);
 	const requestsHistory = useSelector((state: RootStateOrAny) => state.console.requestsHistory);
-	const [isInvalid, setIsInvali] = useState<boolean>(true);
+	const [isInvalid, setIsInvali] = useState<boolean>(false);
 	const [forRequest, setForRequest] = useState<any>(null);
 	const [fullscreen, setFullscreen] = useState<boolean>(false);
 
@@ -69,14 +70,10 @@ const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
 		}
 	};
 
-	const handleDelete = (id: number): void => {
-		dispatch(deleteHistoryItem(id));
-	};
-	const handleCopy = () => {
-		console.log('handleCopy');
-	};
-	const handleReRequest = () => {
-		console.log('handleReRequest');
+	const handleReRequest = (action: string) => {
+		setIsInvali(false);
+		setForRequest(JSON.stringify(JSON.parse(`{"action": "${action}"}`), undefined, 2));
+		dispatch(asyncRequest(JSON.parse(`{"action": "${action}"}`)));
 	};
 
 	const FormatToJson = (e: React.FormEvent<HTMLButtonElement>) => {
@@ -113,9 +110,9 @@ const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
 								<DropdownItem
 									key={i.id}
 									isSuccess={i.success}
-									handleDelete={() => handleDelete(i.id)}
-									handleCopy={handleCopy}
-									handleReRequest={handleReRequest}
+									handleDelete={() => dispatch(deleteHistoryItem(i.id))}
+									handleCopy={() => dispatch(copyActionHistoryItem(i.id))}
+									handleReRequest={() => handleReRequest(i.action)}
 								>
 									{i.action}
 								</DropdownItem>

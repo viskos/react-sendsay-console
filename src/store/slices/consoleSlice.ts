@@ -63,9 +63,16 @@ const consoleSlice = createSlice({
         deleteHistoryItem(state, action) {
             state.requestsHistory = state.requestsHistory.filter((e: any) => e.id !== action.payload)
             localStorage.setItem('history', JSON.stringify(state.requestsHistory))
+        },
+        copyActionHistoryItem(state, action) {
+            let historyAction = state.requestsHistory.filter((e: any) => e.id === action.payload)
+            navigator.clipboard
+                .writeText(`{"action": "${historyAction[0].action}"}`)
+                .then(() => console.log('copy'))
+                .catch((e: any) => console.error('error copy', e));
         }
     }
 })
 
 export default consoleSlice.reducer
-export const { successRequest, errorRequest, clearHistory, checkHistory, deleteHistoryItem } = consoleSlice.actions
+export const { successRequest, errorRequest, clearHistory, checkHistory, deleteHistoryItem, copyActionHistoryItem } = consoleSlice.actions
