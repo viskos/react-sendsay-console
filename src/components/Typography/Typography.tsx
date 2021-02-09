@@ -1,14 +1,25 @@
 import React from 'react';
 import Styled from './styled';
 
-const { H1 } = Styled;
+type TTypographyProps = {
+	size?: string;
+	margin?: string;
+	link?: string;
+};
 
-export const Typography: React.FC<{ size: string; margin?: string }> = ({
-	size,
-	margin,
-	children,
-}) => (
-	<H1 size={size} margin={margin}>
-		{children}
-	</H1>
-);
+export const Typography: React.FC<TTypographyProps> = ({ size, margin, children, link }) => {
+	const { StyledTypography, StyledLink } = Styled;
+
+	if (link)
+		return (
+			<StyledLink href={link} margin={margin}>
+				{children}
+			</StyledLink>
+		);
+
+	return (
+		<StyledTypography size={size!} margin={margin}>
+			{children}
+		</StyledTypography>
+	);
+};

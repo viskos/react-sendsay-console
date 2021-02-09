@@ -1,18 +1,27 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-type TH1 = {
-    size: string,
-    margin?: string
-}
+type TTypographyProps = {
+	size?: string;
+	margin?: string;
+};
 
-const H1 = styled.p<TH1>`
-    font-size: ${props => props.size}px;
+const StyledTypography = styled.p<TTypographyProps>`
+	font-size: ${(props) => props.size}px;
 	color: #0d0d0d;
-	margin: ${({margin}) => margin || '0'};
-`
+	margin: ${({ margin }) => margin || '0'};
+`;
+
+const StyledLink = styled.a<TTypographyProps>`
+	font-size: 16px;
+	line-height: 20px;
+	color: #999999;
+	text-decoration: none;
+	margin-top: ${({ margin }) => margin + 'px' || '0'};
+`;
 
 const Styled = {
-    H1
-}
+	StyledTypography,
+	StyledLink,
+};
 
-export default Styled
+export default Styled;

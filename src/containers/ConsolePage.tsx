@@ -141,7 +141,7 @@ const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
 					type="button"
 					disabled={isInvalid}
 				/>
-				<a href="https://github.com/viskos">@viskos</a>
+				<Typography link="https://github.com/viskos">@viskos</Typography>
 				<button onClick={FormatToJson} disabled={isInvalid}>
 					Форматировать
 				</button>

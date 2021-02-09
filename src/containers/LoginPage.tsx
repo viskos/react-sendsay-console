@@ -2,37 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
-import styled from 'styled-components';
-import { StyledButton, Typography, Input, LoginError, Logo } from '../components';
+import {
+	StyledButton,
+	Typography,
+	Input,
+	LoginError,
+	Logo,
+	FormWrapper,
+	StyledForm,
+} from '../components';
 
 import { asyncAuthUser, asyncCheckAuth } from '../store/slices/authSlice';
-
-const Wrapper = styled.div`
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-`;
-
-const StyledForm = styled.section`
-	width: 520px;
-	height: fit-content;
-	left: calc(50% - 520px / 2);
-	top: 222px;
-	background: #ffffff;
-	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-	border-radius: 5px;
-	padding: 40px 30px;
-`;
-
-const A = styled.a`
-	font-size: 16px;
-	line-height: 20px;
-	color: #999999;
-	text-decoration: none;
-	margin-top: 20px;
-`;
 
 const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
 	const dispatch = useDispatch();
@@ -75,7 +55,7 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
 	};
 
 	return (
-		<Wrapper>
+		<FormWrapper>
 			<Logo margin="20" />
 			<StyledForm>
 				<Typography size="24">API-консолька</Typography>
@@ -136,8 +116,10 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
 					}}
 				/>
 			</StyledForm>
-			<A href="https://github.com/viskos">@viskos</A>
-		</Wrapper>
+			<Typography link="https://github.com/viskos" margin={'20'}>
+				@viskos
+			</Typography>
+		</FormWrapper>
 	);
 };
 
