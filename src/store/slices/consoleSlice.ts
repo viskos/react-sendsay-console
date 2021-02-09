@@ -6,7 +6,7 @@ type TConsoleState = {
     request: string | null,
     response: string | null,
     isError: boolean
-    requestsHistory: Array<any>
+    requestsHistory: any
 }
 
 const initialState: TConsoleState = {
@@ -35,23 +35,37 @@ const consoleSlice = createSlice({
         successRequest(state, action) {
             state.response = action.payload.res
             state.requestsHistory.unshift({
+                id: Date.now(),
                 success: true,
                 action: action.payload.payload.action
             })
+            localStorage.setItem('history', JSON.stringify(state.requestsHistory))
         },
         errorRequest(state, action) {
             state.response = action.payload.e
             state.isError = true
             state.requestsHistory.unshift({
+                id: Date.now(),
                 success: false,
                 action: action.payload.payload.action
             })
         },
         clearHistory(state) {
             state.requestsHistory = []
+            localStorage.setItem('history', JSON.stringify([]))
+        },
+        checkHistory(state) {
+            if (localStorage.getItem('history')) {
+                let history: any = localStorage.getItem('history')
+                state.requestsHistory = JSON.parse(history)
+            }
+        },
+        deleteHistoryItem(state, action) {
+            state.requestsHistory = state.requestsHistory.filter((e: any) => e.id !== action.payload)
+            localStorage.setItem('history', JSON.stringify(state.requestsHistory))
         }
     }
 })
 
 export default consoleSlice.reducer
-export const { successRequest, errorRequest, clearHistory } = consoleSlice.actions
+export const { successRequest, errorRequest, clearHistory, checkHistory, deleteHistoryItem } = consoleSlice.actions

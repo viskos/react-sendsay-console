@@ -33,12 +33,10 @@ export const asyncCheckAuth = () => {
 			action: 'pong',
 		})
 		.then((res: any) => {
-			console.log('RELOAD',res)
 			dispatch(checkAuth({login: res.account, sublogin: res.sublogin, key: localStorage.getItem('sendsay_session')}))
 			document.cookie = `sendsay_session=${api.sendsay.session}`
 		})
 		.catch((err: any) => {
-			console.error('RELOAD', err)
 			if (err.id === 'error/auth/failed') {
 				dispatch(logout())
 			}
@@ -61,7 +59,6 @@ export const asyncAuthUser = (payload: TAuthenticate) => {
 			})
 			.catch((err: any) => {
 				document.cookie = '';
-				console.log('err', err);
 				dispatch(authenticateError(err))
 			});
 	}

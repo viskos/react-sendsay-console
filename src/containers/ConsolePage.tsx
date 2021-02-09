@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { logout } from '../store/slices/authSlice';
-import { asyncRequest, clearHistory } from '../store/slices/consoleSlice';
+import {
+	asyncRequest,
+	clearHistory,
+	checkHistory,
+	deleteHistoryItem,
+} from '../store/slices/consoleSlice';
 import {
 	ConsoleHeader,
 	Dropdown,
@@ -17,6 +22,7 @@ import {
 } from '../components';
 
 const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
+	const dispatch = useDispatch();
 	const { login, sublogin } = useSelector((state: RootStateOrAny) => state.auth);
 	const isLoggedIn = useSelector((state: RootStateOrAny) => !!state.auth.sessionKey?.length);
 	const response = useSelector((state: RootStateOrAny) => state.console.response);
@@ -24,6 +30,7 @@ const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
 	const requestsHistory = useSelector((state: RootStateOrAny) => state.console.requestsHistory);
 	const [isInvalid, setIsInvali] = useState<boolean>(true);
 	const [forRequest, setForRequest] = useState<any>(null);
+	const [fullscreen, setFullscreen] = useState<boolean>(false);
 
 	useEffect(() => {
 		if (!isLoggedIn) {
@@ -31,13 +38,25 @@ const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
 		}
 	}, [isLoggedIn]);
 
-	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(checkHistory());
+	}, []);
 
 	const handlelogoutLogOut = () => {
 		dispatch(logout());
 	};
 
-	const historyItems: Array<string | number> = [];
+	const handleFullScreen = () => {
+		if (fullscreen) {
+			document.exitFullscreen().catch((e) => console.error('fullscreen error', e));
+			setFullscreen(false);
+		} else {
+			document.documentElement
+				.requestFullscreen()
+				.catch((e) => console.error('fullscreen error', e));
+			setFullscreen(true);
+		}
+	};
 
 	const handleRequest = (e: React.FormEvent<HTMLTextAreaElement>) => {
 		setForRequest(e.currentTarget.value);
@@ -48,6 +67,16 @@ const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
 			console.error('err');
 			setIsInvali(true);
 		}
+	};
+
+	const handleDelete = (id: number): void => {
+		dispatch(deleteHistoryItem(id));
+	};
+	const handleCopy = () => {
+		console.log('handleCopy');
+	};
+	const handleReRequest = () => {
+		console.log('handleReRequest');
 	};
 
 	const FormatToJson = (e: React.FormEvent<HTMLButtonElement>) => {
@@ -68,19 +97,26 @@ const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
 				<ConsoleHeader item="wrapper-item">
 					<ConsoleHeader item="user-data">
 						<Typography size="16">
-							{login} : {sublogin}
+							{login}
+							{sublogin ? <>: {sublogin}</> : null}
 						</Typography>
 					</ConsoleHeader>
 					<HeaderButtons onClick={handlelogoutLogOut} type="logout" title="Выйти" />
-					<HeaderButtons title="full" type="fullscreen" />
+					<HeaderButtons onClick={handleFullScreen} title="full" type="fullscreen" />
 				</ConsoleHeader>
 			</ConsoleHeader>
 
 			<Dropdown>
 				<Scrollable>
 					{requestsHistory.length
-						? requestsHistory.map((i: any, index: any) => (
-								<DropdownItem key={index} isSuccess={i.success}>
+						? requestsHistory.map((i: any) => (
+								<DropdownItem
+									key={i.id}
+									isSuccess={i.success}
+									handleDelete={() => handleDelete(i.id)}
+									handleCopy={handleCopy}
+									handleReRequest={handleReRequest}
+								>
 									{i.action}
 								</DropdownItem>
 						  ))

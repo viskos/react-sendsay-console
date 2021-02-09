@@ -2,7 +2,20 @@ import React, { useState } from 'react';
 import Styled from './styled';
 import { Typography } from '../../components';
 
-export const DropdownItem: React.FC<{ isSuccess?: boolean }> = ({ isSuccess, children }) => {
+type TDropdownItem = {
+	isSuccess?: boolean;
+	handleDelete: () => void;
+	handleCopy: () => void;
+	handleReRequest: () => void;
+};
+
+export const DropdownItem: React.FC<TDropdownItem> = ({
+	isSuccess,
+	handleDelete,
+	handleCopy,
+	handleReRequest,
+	children,
+}) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 
 	const handleDropdownToggle = (): void => {
@@ -25,9 +38,29 @@ export const DropdownItem: React.FC<{ isSuccess?: boolean }> = ({ isSuccess, chi
 				<Dots />
 			</StyledItem>
 			<DropdownBody isShow={isOpen}>
-				<DropdownItem onClick={chooseDropdownItem}>Выполнить</DropdownItem>
-				<DropdownItem onClick={chooseDropdownItem}>Скопировать</DropdownItem>
-				<DropdownItem onClick={chooseDropdownItem} destructive>
+				<DropdownItem
+					onClick={() => {
+						handleReRequest();
+						chooseDropdownItem();
+					}}
+				>
+					Выполнить
+				</DropdownItem>
+				<DropdownItem
+					onClick={() => {
+						chooseDropdownItem();
+						handleCopy();
+					}}
+				>
+					Скопировать
+				</DropdownItem>
+				<DropdownItem
+					onClick={() => {
+						chooseDropdownItem();
+						handleDelete();
+					}}
+					destructive
+				>
 					Удалить
 				</DropdownItem>
 			</DropdownBody>

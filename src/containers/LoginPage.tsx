@@ -42,8 +42,6 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
 	const loading = useSelector((state: RootStateOrAny) => state.auth.loading);
 	const isLoggedIn = useSelector((state: RootStateOrAny) => !!state.auth.sessionKey?.length);
 	const error = useSelector((state: RootStateOrAny) => state.auth.asyncAuthResErr);
-	console.log('loading', loading);
-	console.log('isLoggedIn', isLoggedIn);
 
 	useEffect(() => {
 		if (isLoggedIn) {
