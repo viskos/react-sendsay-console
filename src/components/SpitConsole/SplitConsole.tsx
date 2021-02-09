@@ -8,9 +8,17 @@ type TSplitConsoleProps = {
 	onChange: (e: React.FormEvent<HTMLTextAreaElement>) => void;
 	value: string;
 	isInvalid: boolean;
+	response?: any;
+	isError?: boolean;
 };
 
-export const SplitConsole: React.FC<TSplitConsoleProps> = ({ onChange, value, isInvalid }) => {
+export const SplitConsole: React.FC<TSplitConsoleProps> = ({
+	onChange,
+	value,
+	isInvalid,
+	response,
+	isError,
+}) => {
 	const initialWidth: number = window.innerWidth / 2;
 
 	const { StyledTextArea } = Styled;
@@ -59,7 +67,7 @@ export const SplitConsole: React.FC<TSplitConsoleProps> = ({ onChange, value, is
 			>
 				<Typography size="12">Ответ:</Typography>
 				<Pane style={{ height: '100%' }}>
-					<StyledTextArea />
+					<StyledTextArea isError={isError} value={JSON.stringify(response, undefined, 2)} />
 				</Pane>
 			</div>
 		</SplitPane>
