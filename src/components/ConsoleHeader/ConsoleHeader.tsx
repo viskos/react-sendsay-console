@@ -11,6 +11,7 @@ export const ConsoleHeader: React.FC<TConsoleHeader> = ({ item, children }) => {
 	const renderContent = () => {
 		if (item === 'wrapper') return <HeaderWrapper>{children}</HeaderWrapper>;
 		if (item === 'wrapper-item') return <HeaderItem>{children}</HeaderItem>;
+		if (item === 'wrapper-item-flex') return <HeaderItem flex>{children}</HeaderItem>;
 		if (item === 'user-data') return <UserData>{children}</UserData>;
 		return null;
 	};

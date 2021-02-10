@@ -76,7 +76,7 @@ const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
 		dispatch(asyncRequest(JSON.parse(`{"action": "${action}"}`)));
 	};
 
-	const FormatToJson = (e: React.FormEvent<HTMLButtonElement>) => {
+	const FormatToJson = () => {
 		setForRequest(JSON.stringify(JSON.parse(forRequest), undefined, 2));
 	};
 
@@ -91,7 +91,7 @@ const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
 					<Logo />
 					<Typography size="20">API-консолька</Typography>
 				</ConsoleHeader>
-				<ConsoleHeader item="wrapper-item">
+				<ConsoleHeader item="wrapper-item-flex">
 					<ConsoleHeader item="user-data">
 						<Typography size="16">
 							{login}
@@ -99,7 +99,12 @@ const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
 						</Typography>
 					</ConsoleHeader>
 					<HeaderButtons onClick={handlelogoutLogOut} type="logout" title="Выйти" />
-					<HeaderButtons onClick={handleFullScreen} title="full" type="fullscreen" />
+					<HeaderButtons
+						onClick={handleFullScreen}
+						fullscreen={fullscreen}
+						title="full"
+						type="fullscreen"
+					/>
 				</ConsoleHeader>
 			</ConsoleHeader>
 
@@ -142,9 +147,11 @@ const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
 					disabled={isInvalid}
 				/>
 				<Typography link="https://github.com/viskos">@viskos</Typography>
-				<button onClick={FormatToJson} disabled={isInvalid}>
-					Форматировать
-				</button>
+				<HeaderButtons
+					onClick={() => FormatToJson()}
+					type="format"
+					disabled={isInvalid}
+				></HeaderButtons>
 			</Footer>
 		</>
 	);

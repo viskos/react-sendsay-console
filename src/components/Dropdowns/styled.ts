@@ -13,11 +13,11 @@ const DropdownWrapper = styled.div<React.CSSProperties>`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding-left: 15px;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 	width: 100%;
 	padding: 0;
 	position: relative;
+	padding-left: 15px;
 `;
 
 const Dots = styled.div<React.CSSProperties>`
