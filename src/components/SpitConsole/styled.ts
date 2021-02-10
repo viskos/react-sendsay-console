@@ -5,6 +5,12 @@ type TStyledTextAreaProps = {
 	isError?: boolean;
 };
 
+const SplitConsoleWrapper = styled.div<React.CSSProperties>`
+	background: white;
+	height: 100%;
+	position: relative;
+`;
+
 const StyledTextArea = styled.textarea<TStyledTextAreaProps>`
     background: #ffffff;
     border: ${({ isInvalid, isError }) =>
@@ -32,6 +38,7 @@ const PaneWrapper = styled.div<React.CSSProperties>`
 const Styled = {
 	StyledTextArea,
 	PaneWrapper,
+	SplitConsoleWrapper,
 };
 
 export default Styled;

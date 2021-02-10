@@ -22,6 +22,7 @@ import {
 	Scrollable,
 	Logo,
 	Loader,
+	SplitWrapper,
 } from '../components';
 
 const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
@@ -134,7 +135,7 @@ const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
 				</HeaderButtons>
 			</Dropdown>
 
-			<div style={{ background: 'white', height: '100%', position: 'relative' }}>
+			<SplitWrapper>
 				<SplitConsole
 					onChange={handleRequest}
 					value={forRequest}
@@ -142,7 +143,7 @@ const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
 					response={response}
 					isError={isError}
 				/>
-			</div>
+			</SplitWrapper>
 
 			<Footer>
 				<StyledButton onClick={handleSendRequest} type="button" disabled={isInvalid}>

@@ -1,17 +1,17 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 type TLogoStyled = {
-    margin: string
-}
+	margin: string;
+};
 
 const LogoStyled = styled.img<TLogoStyled>`
-    width: 115px;
-    height: 30px;
-	margin-bottom: ${props => props.margin}px;
+	width: 115px;
+	height: 30px;
+	margin-bottom: ${(props) => props.margin}px;
 `;
 
 const Styled = {
-    LogoStyled
-}
+	LogoStyled,
+};
 
-export default Styled
+export default Styled;

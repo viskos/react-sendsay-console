@@ -7,6 +7,7 @@ export { StyledButton } from './Button/StyledButton';
 export { Dropdown } from './Dropdowns/Dropdown';
 export { DropdownItem } from './Dropdowns/DropdownItem';
 export { Typography } from './Typography/Typography';
+export { SplitWrapper } from './SpitConsole/SplitWrapper';
 export { SplitConsole } from './SpitConsole/SplitConsole';
 export { Footer } from './Footer/Footer';
 export { Scrollable } from './Scrollable/Scrollable';

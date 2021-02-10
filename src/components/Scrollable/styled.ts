@@ -1,17 +1,17 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
 const ScrollableWrapper = styled.div<React.CSSProperties>`
-    display: flex;
-	width: calc(100% - 50px);
+	display: flex;
+	width: calc(100% - 65px);
 	overflow-x: hidden;
 	padding: 0;
 	position: absolute;
 	top: 20%;
-`
+`;
 
 const Styled = {
-    ScrollableWrapper
-}
+	ScrollableWrapper,
+};
 
-export default Styled
+export default Styled;
