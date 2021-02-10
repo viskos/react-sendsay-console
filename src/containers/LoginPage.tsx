@@ -97,7 +97,7 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
 												{...input}
 												placeholder="Пароль"
 												title="Пароль"
-												// type="password"
+												type="password"
 												error={meta.error}
 											/>
 											{meta.touched && meta.error && <span>{meta.error}</span>}
