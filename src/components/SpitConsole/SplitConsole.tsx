@@ -32,56 +32,29 @@ export const SplitConsole: React.FC<TSplitConsoleProps> = ({
 		localStorage.setItem('pane_size', size);
 	};
 
-	const { StyledTextArea } = Styled;
+	const { StyledTextArea, PaneWrapper } = Styled;
 
 	return (
 		<SplitPane
-			style={{
-				position: 'absolute',
-				top: '0',
-				left: '0',
-				right: '0',
-				bottom: '0',
-				padding: '0px 15px 15px 15px',
-			}}
+			className="SplitPane"
 			split="vertical"
 			minSize={50}
 			defaultSize={paneSize}
 			onChange={handleResize}
 		>
-			<div
-				style={{
-					padding: '15px 0 15px 0',
-					position: 'absolute',
-					top: '0',
-					left: '0',
-					right: '0',
-					bottom: '0',
-					height: '100%',
-				}}
-			>
+			<PaneWrapper>
 				<Typography size="12">Запрос:</Typography>
-				<Pane style={{ height: '100%' }}>
+				<Pane className="pane">
 					<StyledTextArea value={value} onChange={onChange} isInvalid={isInvalid} />
 				</Pane>
-			</div>
+			</PaneWrapper>
 
-			<div
-				style={{
-					padding: '15px 0 15px 0',
-					position: 'absolute',
-					top: '0',
-					left: '0',
-					right: '0',
-					bottom: '0',
-					height: '100%',
-				}}
-			>
+			<PaneWrapper>
 				<Typography size="12">Ответ:</Typography>
-				<Pane style={{ height: '100%' }}>
+				<Pane className="pane">
 					<StyledTextArea isError={isError} value={JSON.stringify(response, undefined, 2)} />
 				</Pane>
-			</div>
+			</PaneWrapper>
 		</SplitPane>
 	);
 };
