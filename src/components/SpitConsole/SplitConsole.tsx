@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SplitPane, { Pane } from 'react-split-pane';
 import { Typography } from '../Typography/Typography';
 import Styled from './styled';
@@ -19,7 +19,18 @@ export const SplitConsole: React.FC<TSplitConsoleProps> = ({
 	response,
 	isError,
 }) => {
-	const initialWidth: number = window.innerWidth / 2;
+	const [paneSize, setPaneSize] = useState<number>(window.innerWidth / 2);
+
+	useEffect(() => {
+		if (localStorage.getItem('pane_size')) {
+			setPaneSize(Number(localStorage.getItem('pane_size')));
+		}
+	}, [paneSize]);
+
+	const handleResize = (e: number) => {
+		const size = String(e);
+		localStorage.setItem('pane_size', size);
+	};
 
 	const { StyledTextArea } = Styled;
 
@@ -35,7 +46,8 @@ export const SplitConsole: React.FC<TSplitConsoleProps> = ({
 			}}
 			split="vertical"
 			minSize={50}
-			defaultSize={initialWidth}
+			defaultSize={paneSize}
+			onChange={handleResize}
 		>
 			<div
 				style={{
