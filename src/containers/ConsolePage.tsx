@@ -8,6 +8,7 @@ import {
 	checkHistory,
 	deleteHistoryItem,
 	copyActionHistoryItem,
+	loading,
 } from '../store/slices/consoleSlice';
 import {
 	ConsoleHeader,
@@ -20,11 +21,13 @@ import {
 	Typography,
 	Scrollable,
 	Logo,
+	Loader,
 } from '../components';
 
 const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
 	const dispatch = useDispatch();
 	const { login, sublogin } = useSelector((state: RootStateOrAny) => state.auth);
+	const isLoading = useSelector((state: RootStateOrAny) => state.console.loading);
 	const isLoggedIn = useSelector((state: RootStateOrAny) => !!state.auth.sessionKey?.length);
 	const response = useSelector((state: RootStateOrAny) => state.console.response);
 	const isError = useSelector((state: RootStateOrAny) => state.console.isError);
@@ -71,6 +74,7 @@ const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
 	};
 
 	const handleReRequest = (action: string) => {
+		dispatch(loading());
 		setIsInvali(false);
 		setForRequest(JSON.stringify(JSON.parse(`{"action": "${action}"}`), undefined, 2));
 		dispatch(asyncRequest(JSON.parse(`{"action": "${action}"}`)));
@@ -81,6 +85,7 @@ const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
 	};
 
 	const handleSendRequest = () => {
+		dispatch(loading());
 		dispatch(asyncRequest(JSON.parse(forRequest)));
 	};
 
@@ -140,12 +145,9 @@ const ConsolePage: React.FC<RouteComponentProps> = ({ history }) => {
 			</div>
 
 			<Footer>
-				<StyledButton
-					value="Отправить"
-					onClick={handleSendRequest}
-					type="button"
-					disabled={isInvalid}
-				/>
+				<StyledButton onClick={handleSendRequest} type="button" disabled={isInvalid}>
+					{isLoading ? <Loader /> : 'Отправить'}
+				</StyledButton>
 				<Typography link="https://github.com/viskos">@viskos</Typography>
 				<HeaderButtons
 					onClick={() => FormatToJson()}

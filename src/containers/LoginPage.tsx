@@ -10,16 +10,17 @@ import {
 	Logo,
 	FormWrapper,
 	StyledForm,
+	Loader,
 } from '../components';
 
-import { asyncAuthUser, asyncCheckAuth } from '../store/slices/authSlice';
+import { asyncAuthUser, asyncCheckAuth, loading } from '../store/slices/authSlice';
 
 const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
 	const dispatch = useDispatch();
 	const [login, setLogin] = useState<string>('');
 	const [sublogin, setSubLogin] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
-	const loading = useSelector((state: RootStateOrAny) => state.auth.loading);
+	const isLoaded = useSelector((state: RootStateOrAny) => state.auth.loading);
 	const isLoggedIn = useSelector((state: RootStateOrAny) => !!state.auth.sessionKey?.length);
 	const error = useSelector((state: RootStateOrAny) => state.auth.asyncAuthResErr);
 
@@ -33,18 +34,25 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
 		dispatch(asyncCheckAuth());
 	}, []);
 
-	const validateLogin = (value: string) => {
+	const validateLogin = (value: string): boolean => {
 		setLogin(value);
 		return value ? false : true;
 	};
 
-	const validatePassword = (value: string) => {
+	const validatePassword = (value: string): boolean => {
 		setPassword(value);
-		return value ? false : true;
+		console.log(value);
+		if (!value) {
+			return true;
+		} else if (!/^[a-z0-9\s]+$/i.test(value)) {
+			return true;
+		}
+		return false;
 	};
 
 	const onSubmit = (e: React.MouseEvent<HTMLButtonElement>): void => {
 		e.preventDefault();
+		dispatch(loading());
 		dispatch(
 			asyncAuthUser({
 				login,
@@ -62,7 +70,7 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
 				{error ? <LoginError error={JSON.stringify(error)} /> : null}
 				<Form
 					onSubmit={onSubmit}
-					render={({ pristine }) => {
+					render={({ invalid }) => {
 						return (
 							<form>
 								<Field
@@ -106,11 +114,12 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
 								/>
 								<StyledButton
 									onClick={onSubmit}
-									value="Войти"
-									disabled={pristine}
+									disabled={invalid}
 									type="submit"
 									margin="20"
-								/>
+								>
+									{isLoaded ? <Loader /> : 'Войти'}
+								</StyledButton>
 							</form>
 						);
 					}}

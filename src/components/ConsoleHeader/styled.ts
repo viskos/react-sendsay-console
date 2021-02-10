@@ -17,7 +17,7 @@ const HeaderWrapper = styled.div<React.CSSProperties>`
 const HeaderItem = styled.div<THeaderItem>`
 	display: flex;
 	align-items: center;
-	width: 500px;
+	width: fit-content;
 	justify-content: ${({ flex }) => (flex ? 'space-between' : 'initial')};
 `;
 

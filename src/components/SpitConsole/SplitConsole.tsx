@@ -52,7 +52,10 @@ export const SplitConsole: React.FC<TSplitConsoleProps> = ({
 			<PaneWrapper>
 				<Typography size="12">Ответ:</Typography>
 				<Pane className="pane">
-					<StyledTextArea isError={isError} value={JSON.stringify(response, undefined, 2)} />
+					<StyledTextArea
+						isError={isError}
+						value={response !== null ? JSON.stringify(response, undefined, 2) : ''}
+					/>
 				</Pane>
 			</PaneWrapper>
 		</SplitPane>

@@ -89,15 +89,20 @@ const authSlice = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {
+		loading(state) {
+			state.loading = true;
+		},
 		checkAuth(state, action) {
 			state.login = action.payload.login;
 			state.sublogin = action.payload.sublogin;
 			state.sessionKey = action.payload.key;
+			state.loading = false;
 		},
 		authenticateSuccess(state, action) {
 			state.login = action.payload.login;
 			state.sublogin = action.payload.sublogin;
 			state.sessionKey = action.payload.key;
+			state.loading = false;
 		},
 		authenticateError(state, action) {
 			state.asyncAuthResErr = action.payload;
@@ -111,4 +116,10 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
-export const { checkAuth, authenticateSuccess, authenticateError, logoutAuth } = authSlice.actions;
+export const {
+	checkAuth,
+	authenticateSuccess,
+	authenticateError,
+	logoutAuth,
+	loading,
+} = authSlice.actions;

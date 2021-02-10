@@ -49,6 +49,7 @@ const LogoutButton = styled.button<React.CSSProperties>`
 	cursor: pointer;
 	background: url(${logoutImg}) no-repeat;
 	background-position: right;
+	margin: 0 10px;
 `;
 
 const FullScreenButton = styled.button<TStyledButton>`

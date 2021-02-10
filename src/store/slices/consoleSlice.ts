@@ -6,9 +6,11 @@ type TConsoleState = {
 	response: string | null;
 	isError: boolean;
 	requestsHistory: any;
+	loading: boolean;
 };
 
 const initialState: TConsoleState = {
+	loading: false,
 	request: null,
 	response: null,
 	isError: false,
@@ -74,6 +76,9 @@ const consoleSlice = createSlice({
 	name: 'console',
 	initialState,
 	reducers: {
+		loading(state) {
+			state.loading = true;
+		},
 		successRequest(state, action) {
 			state.response = action.payload.res;
 			state.requestsHistory.unshift({
@@ -81,6 +86,7 @@ const consoleSlice = createSlice({
 				success: true,
 				action: action.payload.payload.action,
 			});
+			state.loading = false;
 		},
 		errorRequest(state, action) {
 			state.response = action.payload.e;
@@ -90,6 +96,7 @@ const consoleSlice = createSlice({
 				success: false,
 				action: action.payload.payload.action,
 			});
+			state.loading = false;
 		},
 		clear(state) {
 			state.requestsHistory = [];
@@ -104,4 +111,11 @@ const consoleSlice = createSlice({
 });
 
 export default consoleSlice.reducer;
-export const { successRequest, errorRequest, clear, check, deleteItem } = consoleSlice.actions;
+export const {
+	successRequest,
+	errorRequest,
+	clear,
+	check,
+	deleteItem,
+	loading,
+} = consoleSlice.actions;

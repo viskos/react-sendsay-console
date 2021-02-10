@@ -2,7 +2,7 @@ import React from 'react';
 import Styled from './styled';
 
 type TStyledButton = {
-	value: string;
+	value?: string;
 	onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 	type: 'button' | 'submit' | 'reset' | undefined;
 	disabled?: boolean;
@@ -17,8 +17,9 @@ export const StyledButton: React.FC<TStyledButton> = ({
 	type,
 	margin,
 	disabled,
+	children,
 }) => (
 	<StyleButton margin={margin!} onClick={onClick} type={type} disabled={disabled}>
-		{value}
+		{children}
 	</StyleButton>
 );

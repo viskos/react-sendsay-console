@@ -12,3 +12,4 @@ export { Footer } from './Footer/Footer';
 export { Scrollable } from './Scrollable/Scrollable';
 export { FormWrapper } from './LoginForm/Wrapper';
 export { StyledForm } from './LoginForm/StyledForm';
+export { Loader } from './Loader/Loader';
