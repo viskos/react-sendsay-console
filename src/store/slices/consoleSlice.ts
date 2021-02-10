@@ -15,16 +15,58 @@ const initialState: TConsoleState = {
 	requestsHistory: [],
 };
 
+const addItemIntoStorage = (state: any) => {
+	const store = state();
+	localStorage.setItem('history', JSON.stringify(store.console.requestsHistory));
+};
+
 export const asyncRequest = (payload: string) => {
-	return async (dispatch: any) => {
+	return async (dispatch: any, getState: any) => {
 		api.sendsay
 			.request(payload)
 			.then((res: Response) => {
 				dispatch(successRequest({ res, payload }));
+				addItemIntoStorage(getState);
 			})
 			.catch((e: Error) => {
 				dispatch(errorRequest({ e, payload }));
+				addItemIntoStorage(getState);
 			});
+	};
+};
+
+export const deleteHistoryItem = (id: number) => {
+	return (dispatch: any, getState: any) => {
+		dispatch(deleteItem(id));
+		addItemIntoStorage(getState);
+	};
+};
+
+export const clearHistory = () => {
+	return (dispatch: any) => {
+		dispatch(clear());
+		localStorage.setItem('history', JSON.stringify([]));
+	};
+};
+
+export const checkHistory = () => {
+	return (dispatch: any) => {
+		if (localStorage.getItem('history')) {
+			let history: any = localStorage.getItem('history');
+			dispatch(check(history));
+		}
+	};
+};
+
+export const copyActionHistoryItem = (id: number) => {
+	return async (dispatch: any, getState: any) => {
+		const store = getState();
+		let historyAction = store.console.requestsHistory.filter((e: any) => e.id === id);
+		navigator.clipboard
+			.writeText(
+				JSON.stringify(JSON.parse(`{"action": "${historyAction[0].action}"}`), undefined, 2)
+			)
+			.catch((e: any) => console.error('error copy', e));
 	};
 };
 
@@ -39,7 +81,6 @@ const consoleSlice = createSlice({
 				success: true,
 				action: action.payload.payload.action,
 			});
-			localStorage.setItem('history', JSON.stringify(state.requestsHistory));
 		},
 		errorRequest(state, action) {
 			state.response = action.payload.e;
@@ -49,40 +90,18 @@ const consoleSlice = createSlice({
 				success: false,
 				action: action.payload.payload.action,
 			});
-			localStorage.setItem('history', JSON.stringify(state.requestsHistory));
 		},
-		clearHistory(state) {
+		clear(state) {
 			state.requestsHistory = [];
-			localStorage.setItem('history', JSON.stringify([]));
 		},
-		checkHistory(state) {
-			if (localStorage.getItem('history')) {
-				let history: any = localStorage.getItem('history');
-				state.requestsHistory = JSON.parse(history);
-			}
+		check(state, action) {
+			state.requestsHistory = JSON.parse(action.payload);
 		},
-		deleteHistoryItem(state, action) {
+		deleteItem(state, action) {
 			state.requestsHistory = state.requestsHistory.filter((e: any) => e.id !== action.payload);
-			localStorage.setItem('history', JSON.stringify(state.requestsHistory));
-		},
-		copyActionHistoryItem(state, action) {
-			let historyAction = state.requestsHistory.filter((e: any) => e.id === action.payload);
-			navigator.clipboard
-				.writeText(
-					JSON.stringify(JSON.parse(`{"action": "${historyAction[0].action}"}`), undefined, 2)
-				)
-				.then(() => console.log('copy'))
-				.catch((e: any) => console.error('error copy', e));
 		},
 	},
 });
 
 export default consoleSlice.reducer;
-export const {
-	successRequest,
-	errorRequest,
-	clearHistory,
-	checkHistory,
-	deleteHistoryItem,
-	copyActionHistoryItem,
-} = consoleSlice.actions;
+export const { successRequest, errorRequest, clear, check, deleteItem } = consoleSlice.actions;

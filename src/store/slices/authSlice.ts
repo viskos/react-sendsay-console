@@ -77,6 +77,14 @@ export const asyncAuthUser = (payload: TAuthenticate) => {
 	};
 };
 
+export const logout = () => {
+	return (dispatch: any) => {
+		dispatch(logoutAuth());
+		document.cookie = '';
+		localStorage.clear();
+	};
+};
+
 const authSlice = createSlice({
 	name: 'auth',
 	initialState,
@@ -87,7 +95,6 @@ const authSlice = createSlice({
 			state.sessionKey = action.payload.key;
 		},
 		authenticateSuccess(state, action) {
-			console.log(action);
 			state.login = action.payload.login;
 			state.sublogin = action.payload.sublogin;
 			state.sessionKey = action.payload.key;
@@ -95,9 +102,7 @@ const authSlice = createSlice({
 		authenticateError(state, action) {
 			state.asyncAuthResErr = action.payload;
 		},
-		logout(state) {
-			document.cookie = '';
-			localStorage.clear();
+		logoutAuth(state) {
 			state.sessionKey = null;
 			state.login = null;
 			state.sublogin = null;
@@ -106,4 +111,4 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
-export const { checkAuth, authenticateSuccess, authenticateError, logout } = authSlice.actions;
+export const { checkAuth, authenticateSuccess, authenticateError, logoutAuth } = authSlice.actions;
